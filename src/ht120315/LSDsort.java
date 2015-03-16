@@ -19,14 +19,15 @@ public class LSDsort {
 //TODO: shorten the code below by passing corresponding sort function as a 
 //		parameter, class factory should be used.
 //TODO: create classes, to use data.sort() instead ArrayInt.sort(data)
-		System.arraycopy(data, 0, datacopy, 0, max);
-		System.out.println(max+" elements Radix sort C-style");		
+		System.arraycopy(data, 0, datacopy, 0, max);		
+		System.out.println(max+" elements Radix sort C-style, radix "+0x100);
 		start = System.currentTimeMillis();
-		ArrayInt.radixSort(datacopy);
+		ArrayInt.radixSort2(datacopy);
 		stop = System.currentTimeMillis();
+//		System.out.println(Arrays.toString(datacopy));
 		System.out.println("Sorted OK:"+ArrayInt.isSortedUp(datacopy));
 		System.out.println("Elapsed = " + (stop - start)+"ms");
-
+/*
 		System.arraycopy(data, 0, datacopy, 0, max);
 		System.out.println(max+" Wiki java example radix sort");
 		start = System.currentTimeMillis();
@@ -36,7 +37,7 @@ public class LSDsort {
 		stop = System.currentTimeMillis();
 		System.out.println("Sorted OK:"+ArrayInt.isSortedUp(datacopy));
 		System.out.println("Elapsed = " + (stop - start)+"ms");
-		
+*/		
 		System.arraycopy(data, 0, datacopy, 0, max);
 		System.out.println(max+" Built-in sort");
 		start = System.currentTimeMillis();
