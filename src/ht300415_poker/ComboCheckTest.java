@@ -2,15 +2,22 @@ package ht300415_poker;
 
 import static org.junit.Assert.*;
 import static ht300415_poker.Card.*;
+import static ht300415_poker.ComboCheck.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /* JUnit tests for ComboCheck class which determines poker combinations
  * Test hands' sets are fixed, but the cards in the hand are shuffled 
  * randomly before the corresponding test 
  */
+@RunWith(Parameterized.class)
 public class ComboCheckTest {
 //	note that 0 is 2(two), 1 is 3..., 8 is 10, 9 is Jack etc
 	public final static int[][] NONE_HAND = {{10,heart},{4,spade},{2,diamond},
@@ -67,105 +74,34 @@ public class ComboCheckTest {
 		}
 		return pile;
 	}
-	private CardPile generateNone() {
-		return generateHand(NONE_HAND);
+	
+	@Parameters
+	public static List<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+				{NONE, NONE_HAND},
+				{KINGACE,KINGACE_HAND},
+				{DEUCE, DEUCE_HAND},
+				{DOUBLE_DEUCE, DOUBLE_DEUCE_HAND},
+				{TRINE, TRINE_HAND},
+				{STRAIGHT, STRAIGHT_HAND},
+				{FLUSH, FLUSH_HAND},
+				{FULL_HOUSE, FULL_HOUSE_HAND},
+				{SQUARE, SQUARE_HAND},
+				{STRAIGHT_FLUSH, STRAIGHT_FLUSH_HAND},
+				{ROYAL_FLUSH, ROYAL_FLUSH_HAND},
+		}
+		);
 	}
-	private CardPile generateKingAce() {
-		return generateHand(KINGACE_HAND);
-	}
-	private CardPile generateDeuce() {
-		return generateHand(DEUCE_HAND);
-	}
-	private CardPile generateDoubleDeuce() {
-		return generateHand(DOUBLE_DEUCE_HAND);
-	}
-	private CardPile generateTrine() {
-		return generateHand(TRINE_HAND);
-	}
-	private CardPile generateStraight() {
-		return generateHand(STRAIGHT_HAND);
-	}
-	private CardPile generateFlush() {
-		return generateHand(FLUSH_HAND);
-	}
-	private CardPile generateFullHouse() {
-		return generateHand(FULL_HOUSE_HAND);
-	}
-	private CardPile generateSquare() {
-		return generateHand(SQUARE_HAND);
-	}
-	private CardPile generateStraightFlush() {
-		return generateHand(STRAIGHT_FLUSH_HAND);
-	}
-	private CardPile generateRoyalFlush() {
-		return generateHand(ROYAL_FLUSH_HAND);
-	}
-
-	@Test
-	public void testNone() {
-		CardPile t = generateNone();
-		printHand(t);
-		assertEquals (ComboCheck.NONE, new ComboCheck(t).getCombo());
+	private int _combo;
+	private int[][] _hand;
+	public ComboCheckTest(int combo, int[][] hand) {
+		_combo = combo;
+		_hand = hand;
 	}
 	@Test
-	public void testKingAce() {
-		CardPile t = generateKingAce();
+	public void testCombo() {
+		CardPile t = generateHand(_hand);
 		printHand(t);
-		assertEquals (ComboCheck.KINGACE, new ComboCheck(t).getCombo());
+		assertEquals (_combo, new ComboCheck(t).getCombo());
 	}
-	@Test
-	public void testDeuce() {
-		CardPile t = generateDeuce();
-		printHand(t);
-		assertEquals (ComboCheck.DEUCE, new ComboCheck(t).getCombo());
-	}
-	@Test
-	public void testDoubleDeuce() {
-		CardPile t = generateDoubleDeuce();
-		printHand(t);
-		assertEquals (ComboCheck.DOUBLE_DEUCE, new ComboCheck(t).getCombo());
-	}
-	@Test
-	public void testTrine() {
-		CardPile t = generateTrine();
-		printHand(t);
-		assertEquals (ComboCheck.TRINE, new ComboCheck(t).getCombo());
-	}
-	@Test
-	public void testStraight() {
-		CardPile t = generateStraight();
-		printHand(t);
-		assertEquals (ComboCheck.STRAIGHT, new ComboCheck(t).getCombo());
-	}
-	@Test
-	public void testFlush() {
-		CardPile t = generateFlush();
-		printHand(t);
-		assertEquals (ComboCheck.FLUSH, new ComboCheck(t).getCombo());
-	}
-	@Test
-	public void testFullHouse() {
-		CardPile t = generateFullHouse();
-		printHand(t);
-		assertEquals (ComboCheck.FULL_HOUSE, new ComboCheck(t).getCombo());
-	}
-	@Test
-	public void testSquare() {
-		CardPile t = generateSquare();
-		printHand(t);
-		assertEquals (ComboCheck.SQUARE, new ComboCheck(t).getCombo());
-	}
-	@Test
-	public void testStraightFlush() {
-		CardPile t = generateStraightFlush();
-		printHand(t);
-		assertEquals (ComboCheck.STRAIGHT_FLUSH, new ComboCheck(t).getCombo());
-	}
-	@Test
-	public void testRoyalFlush() {
-		CardPile t = generateRoyalFlush();
-		printHand(t);
-		assertEquals (ComboCheck.ROYAL_FLUSH, new ComboCheck(t).getCombo());
-	}
-
 }
