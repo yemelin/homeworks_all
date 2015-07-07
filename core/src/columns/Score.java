@@ -1,0 +1,35 @@
+package columns;
+
+public class Score {
+    static int MaxLevel=7;
+    static int FigToDrop=33;	//max number of lines built for level
+
+	int DScore;  //drop bonus
+	int k;		  //triplet counter
+	public int Level;
+	public int Score;
+
+	void setDropBonus(int rows) {
+		DScore = (((Level+1)*(Field.Depth*2-rows) * 2) % 5) * 5;
+	}
+
+	void addLineBonus() {
+		Score += (Level+1)*10;		
+	}
+
+	public void updateLineCounter() {
+        if (++k>=FigToDrop) {
+            k = 0;
+            if (Level<MaxLevel) 
+            	Level++;		
+        }
+	}
+
+	public void addDropBonus() {
+		Score+=DScore;		
+	}
+
+	public long calculateDelay() {
+		return (MaxLevel-Level)*Columns.TimeShift+Columns.MinTimeShift;
+	}	
+}
